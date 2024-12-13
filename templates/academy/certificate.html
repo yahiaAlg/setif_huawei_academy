@@ -1,0 +1,93 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="card certificate-card">
+        <div class="card-body text-center">
+            <div class="certificate-content">
+                <img src="{% static 'images/logo.png' %}" alt="UMMTO Logo" class="mb-4">
+                <h1 class="certificate-title">Certificat de réussite</h1>
+                <p class="certificate-text">Ce certificat est décerné à</p>
+                <h2 class="student-name">{{ student.get_full_name }}</h2>
+                <p class="certificate-text">pour avoir complété avec succès le cours</p>
+                <h3 class="course-name">{{ course.title }}</h3>
+                <p class="completion-date">Le {{ completion_date|date:"d F Y" }}</p>
+                
+                <div class="signatures mt-5">
+                    <div class="row justify-content-center">
+                        <div class="col-md-4">
+                            <img src="{{ instructor_signature }}" alt="Signature de l'instructeur">
+                            <hr>
+                            <p>{{ course.instructor.get_full_name }}</p>
+                            <p class="text-muted">Instructeur</p>
+                        </div>
+                        <div class="col-md-4">
+                            <img src="{{ director_signature }}" alt="Signature du directeur">
+                            <hr>
+                            <p>{{ academy_director }}</p>
+                            <p class="text-muted">Directeur de l'académie</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="certificate-footer">
+                    <p class="certificate-id">ID: {{ certificate_id }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-center mt-4">
+        <a href="{% url 'download_certificate' certificate.id %}" class="btn btn-primary">
+            <i class="fas fa-download"></i> Télécharger le certificat
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .certificate-card {
+        max-width: 800px;
+        margin: 0 auto;
+        border: 20px solid #gold;
+        padding: 20px;
+        background: linear-gradient(45deg, #fff, #f8f9fa);
+    }
+
+    .certificate-title {
+        font-size: 48px;
+        color: #2c3e50;
+        margin-bottom: 30px;
+    }
+
+    .student-name {
+        font-size: 36px;
+        color: #e74c3c;
+        margin: 20px 0;
+    }
+
+    .course-name {
+        font-size: 24px;
+        color: #2980b9;
+        margin: 20px 0;
+    }
+
+    .completion-date {
+        font-style: italic;
+        color: #7f8c8d;
+    }
+
+    .certificate-id {
+        font-size: 12px;
+        color: #95a5a6;
+        margin-top: 30px;
+    }
+
+    .signatures hr {
+        width: 200px;
+        margin: 10px auto;
+    }
+</style>
+{% endblock %}

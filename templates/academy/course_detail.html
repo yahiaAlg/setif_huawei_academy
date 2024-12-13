@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Course Main Content -->
+        <div class="col-lg-8">
+            {% if course.image %}
+                <img src="#" class="img-fluid rounded mb-4" alt="{{ course.title }}">
+            {% endif %}
+            
+            <h1 class="mb-3">{{ course.title }}</h1>
+            <div class="badge bg-primary mb-3">{{ course.category }}</div>
+            
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Description du cours</h5>
+                    <p class="card-text">{{ course.description }}</p>
+                </div>
+            </div>
+
+            {% if user.is_staff %}
+                <div class="mb-4">
+                    <a href="{% url 'course_update' course.pk %}" class="btn btn-warning me-2">Modifier</a>
+                    <a href="{% url 'course_delete' course.pk %}" class="btn btn-danger">Supprimer</a>
+                </div>
+            {% endif %}
+
+            {% if user.is_authenticated %}
+                <form action="{% url 'course_enroll' course.pk %}" method="POST" class="mb-4">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">S'inscrire au cours</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-secondary">Connexion pour s'inscrire</a>
+            {% endif %}
+        </div>
+
+        <!-- Related Courses Sidebar -->
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Cours similaires</h5>
+                </div>
+                <div class="card-body">
+                    {% if related_courses %}
+                        {% for related_course in related_courses %}
+                            <div class="mb-3">
+                                <h6><a href="{% url 'course_detail' related_course.pk %}">{{ related_course.title }}</a></h6>
+                                <small class="text-muted">{{ related_course.category }}</small>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="card-text">Aucun cours similaire trouvé.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

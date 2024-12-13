@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Quick Stats -->
+        <div class="col-md-12 mb-4">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            <h5>Total des étudiants</h5>
+                            <h2>{{ total_students }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-success text-white">
+                        <div class="card-body">
+                            <h5>Cours actifs</h5>
+                            <h2>{{ active_courses }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-info text-white">
+                        <div class="card-body">
+                            <h5>Inscriptions ce mois</h5>
+                            <h2>{{ monthly_enrollments }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-warning text-white">
+                        <div class="card-body">
+                            <h5>Certifications délivrées</h5>
+                            <h2>{{ total_certifications }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activities -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Activités récentes</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        {% for activity in recent_activities %}
+                        <li class="mb-3">
+                            <div class="d-flex">
+                                <div class="me-3">
+                                    <span class="badge bg-{{ activity.type_class }}">{{ activity.type }}</span>
+                                </div>
+                                <div>
+                                    <p class="mb-0">{{ activity.description }}</p>
+                                    <small class="text-muted">{{ activity.timestamp }}</small>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course Progress -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Progression des cours</h5>
+                </div>
+                <div class="card-body">
+                    {% for course in courses %}
+                    <div class="mb-3">
+                        <h6>{{ course.title }}</h6>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" 
+                                 style="width: {{ course.completion_rate }}%"
+                                 aria-valuenow="{{ course.completion_rate }}" 
+                                 aria-valuemin="0" 
+                                 aria-valuemax="100">
+                                {{ course.completion_rate }}%
+                            </div>
+                        </div>
+                        <small class="text-muted">{{ course.enrolled_students }} étudiants inscrits</small>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

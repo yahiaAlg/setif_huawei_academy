@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4">Mes Cours</h2>
+    
+    {% if courses %}
+        <div class="row">
+            {% for course in courses %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        {% if course.image %}
+                            <img src="#" class="card-img-top" alt="{{ course.title }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ course.title }}</h5>
+                            <p class="card-text">{{ course.description|truncatewords:20 }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{% url 'course_detail' course.pk %}" class="btn btn-primary">Voir le cours</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            Vous n'êtes inscrit à aucun cours pour le moment. 
+            <a href="{% url 'courses' %}" class="alert-link">Parcourir les cours disponibles</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

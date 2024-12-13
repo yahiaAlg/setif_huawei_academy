@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-4">
+    <h1 class="mb-4">Certifications</h1>
+
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <form class="d-flex" method="get">
+                <input class="form-control me-2" type="search" name="search" 
+                       placeholder="Rechercher une certification" value="{{ search_query }}">
+                <button class="btn btn-outline-primary" type="submit">Rechercher</button>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <form class="d-flex" method="get">
+                <select class="form-select me-2" name="level">
+                    <option value="">Tous les niveaux</option>
+                    {% for level in levels %}
+                        <option value="{{ level }}" {% if request.GET.level == level %}selected{% endif %}>
+                            {{ level }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button class="btn btn-outline-primary" type="submit">Filtrer</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        {% if certifications %}
+            {% for certification in certifications %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ certification.name }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Niveau: {{ certification.level }}</h6>
+                            <p class="card-text">{{ certification.description|truncatewords:30 }}</p>
+                            {% if user.is_authenticated %}
+                                <a href="#" class="btn btn-primary">S'inscrire</a>
+                            {% else %}
+                                <a href="{% url 'login' %}" class="btn btn-outline-primary">Connexion pour s'inscrire</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12 text-center">
+                <p>Aucune certification n'est disponible pour le moment.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    {% if is_paginated %}
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if request.GET.level %}&level={{ request.GET.level }}{% endif %}">Précédent</a>
+                </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}{% if request.GET.level %}&level={{ request.GET.level }}{% endif %}">{{ num }}</a>
+                </li>
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if request.GET.level %}&level={{ request.GET.level }}{% endif %}">Suivant</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+{% endblock %}

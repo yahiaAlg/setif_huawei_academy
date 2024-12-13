@@ -1,0 +1,27 @@
+.card {
+    border: none;
+    border-radius: 10px;
+}
+
+.card-body {
+    padding: 3rem;
+}
+
+.form-control {
+    border-radius: 7px;
+    padding: 12px;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+}
+
+.btn-primary {
+    padding: 12px;
+    border-radius: 7px;
+}
+
+.invalid-feedback {
+    font-size: 0.875em;
+    color: #dc3545;
+}

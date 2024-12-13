@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}UMMTO Huawei ICT Academy{% endblock %}</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-blue: #1B1464;
+            --secondary-blue: #4834d4;
+            --accent-green: #2ecc71;
+            --text-dark: #333333;
+        }
+
+        .navbar-custom {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, rgba(27,20,100,0.95), rgba(72,52,212,0.9));
+            min-height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-card {
+            transition: transform 0.3s ease;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .social-icons a {
+            color: var(--primary-blue);
+            margin: 0 10px;
+            font-size: 1.5rem;
+        }
+    </style>
+    {% block stylesheet %}{% endblock stylesheet %}
+</head>
+<body>
+    {% include 'includes/navbar.html' %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% include 'includes/footer.html' %}
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script>
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
